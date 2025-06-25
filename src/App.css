@@ -1,0 +1,154 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(120deg, #f6f9fc, #e3f2fd);
+  overflow: hidden;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+body.dark-mode {
+  background: linear-gradient(120deg, #2c3e50, #34495e);
+  color: #ecf0f1;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 450px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .app-container {
+  background: #2d3436;
+  color: #ecf0f1;
+}
+
+.app-container h2 {
+  margin-top: 0;
+  font-size: 26px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input-group button {
+  padding: 12px;
+  font-size: 16px;
+  background: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.input-group button:hover {
+  background: #019875;
+}
+
+.time-input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #00b894;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  z-index: 100;
+  animation: fadeInOut 3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid rgba(0, 184, 148, 0.2);
+  animation: floatUp 6s infinite linear;
+}
+
+.triangle:nth-child(2) {
+  left: 10%;
+  top: 90%;
+  animation-delay: 0s;
+}
+
+.triangle:nth-child(3) {
+  left: 40%;
+  top: 100%;
+  animation-delay: 1s;
+}
+
+.triangle:nth-child(4) {
+  left: 70%;
+  top: 95%;
+  animation-delay: 2s;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-800px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-container {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .input-group button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
