@@ -30,18 +30,27 @@ const App = () => {
         const timeLeft = todo.deadline - now;
         let updatedTodo = { ...todo };
 
-        if (!updatedTodo.warned5min && timeLeft <= 5 * 60 * 1000 && timeLeft > 4 * 60 * 1000) {
-          new Notification(`⏰ Hurry up! "${todo.text}" is due in 5 minutes.`);
-          const audio = new Audio('/beep.mp3');
-          audio.play();
-          updatedTodo.warned5min = true;
-        }
+        try {
+          if (!updatedTodo.warned5min && timeLeft <= 5 * 60 * 1000 && timeLeft > 4 * 60 * 1000) {
+            if (Notification.permission === 'granted') {
+              new Notification(`⏰ Hurry up! "${todo.text}" is due in 5 minutes.`);
+            }
+            const audio = new Audio('/beep.mp3');
+            audio.play().catch(err => console.log('Audio blocked by browser:', err));
+            updatedTodo.warned5min = true;
+          }
 
-        if (!updatedTodo.warned0min && timeLeft <= 1000 && timeLeft > -10000) {
-          new Notification(`⚠️ "${todo.text}" is due now!`);
-          const audio = new Audio('/beep.mp3');
-          audio.play();
-          updatedTodo.warned0min = true;
+          if (!updatedTodo.warned0min && timeLeft <= 1000 && timeLeft > -10000) {
+            if (Notification.permission === 'granted') {
+              new Notification(`⚠️ "${todo.text}" is due now!`);
+            }
+            const audio = new Audio('/beep.mp3');
+            audio.play().catch(err => console.log('Audio blocked by browser:', err));
+            updatedTodo.warned0min = true;
+          }
+
+        } catch (error) {
+          console.log('Notification or audio failed:', error);
         }
 
         return updatedTodo;
