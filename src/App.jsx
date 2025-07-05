@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState, useEffect } from 'react';
 import TodoList from './components/TodoList';
 import './App.css';
@@ -78,14 +77,10 @@ const App = () => {
       warned0min: false
     };
 
-    setTodos([...todos, newTodo]);
-    setTask('');
-    setDeadline('');
-    setShowNotification(true);
-
-    // Show 5-minute notification immediately if deadline is within 5 minutes
     const timeLeft = newTodo.deadline - Date.now();
+
     if (timeLeft <= 5 * 60 * 1000 && timeLeft > 0) {
+      alert(`⏰ Hurry up! "${newTodo.text}" is due in less than 5 minutes.`);
       if (Notification.permission === 'granted') {
         new Notification(`⏰ Hurry up! "${newTodo.text}" is due in less than 5 minutes.`);
       }
@@ -94,6 +89,10 @@ const App = () => {
       newTodo.warned5min = true;
     }
 
+    setTodos([...todos, newTodo]);
+    setTask('');
+    setDeadline('');
+    setShowNotification(true);
     setTimeout(() => setShowNotification(false), 2000);
   };
 
@@ -140,7 +139,7 @@ const App = () => {
         <h2 style={{ textAlign: 'center', marginTop: 0 }}>ToDo List 📝</h2>
         <div className="input-group">
           <input
-            style={{ borderColor: '#ccc', backgroundColor: '#ffffff', color: '#111', padding: '10px', fontSize: '14px', appearance: 'none', WebkitTextFillColor: '#111' }}
+            style={{ borderColor: '#ccc', backgroundColor: '#ffffff', color: '#111', padding: '10px', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
             value={task}
             onChange={e => setTask(e.target.value)}
             placeholder="Add your task"
@@ -150,7 +149,7 @@ const App = () => {
             value={deadline}
             onChange={e => setDeadline(e.target.value)}
             className="time-input"
-            style={{ borderColor: '#ccc', backgroundColor: '#ffffff', color: '#111', padding: '10px', fontSize: '14px', appearance: 'none', WebkitTextFillColor: '#111' }}
+            style={{ borderColor: '#ccc', backgroundColor: '#ffffff', color: '#111', padding: '10px', fontSize: '14px', width: '100%', boxSizing: 'border-box' }}
           />
           <button onClick={addTodo}>➕</button>
         </div>
