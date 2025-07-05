@@ -152,3 +152,8 @@ body.dark-mode .app-container {
     padding: 10px;
   }
 }
+.input-group input,
+.time-input {
+  width: 100%;
+  box-sizing: border-box;
+}

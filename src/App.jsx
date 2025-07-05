@@ -31,7 +31,7 @@ const App = () => {
         let updatedTodo = { ...todo };
 
         try {
-          if (!updatedTodo.warned5min && timeLeft <= 5 * 60 * 1000 && timeLeft > 4 * 60 * 1000) {
+          if (!updatedTodo.warned5min && timeLeft <= 5 * 60 * 1000 && timeLeft > 0) {
             if (Notification.permission === 'granted') {
               new Notification(`⏰ Hurry up! "${todo.text}" is due in 5 minutes.`);
             }
@@ -82,6 +82,18 @@ const App = () => {
     setTask('');
     setDeadline('');
     setShowNotification(true);
+
+    // Show 5-minute notification immediately if deadline is within 5 minutes
+    const timeLeft = newTodo.deadline - Date.now();
+    if (timeLeft <= 5 * 60 * 1000 && timeLeft > 0) {
+      if (Notification.permission === 'granted') {
+        new Notification(`⏰ Hurry up! "${newTodo.text}" is due in less than 5 minutes.`);
+      }
+      const audio = new Audio('/beep.mp3');
+      audio.play().catch(err => console.log('Audio blocked by browser:', err));
+      newTodo.warned5min = true;
+    }
+
     setTimeout(() => setShowNotification(false), 2000);
   };
 
